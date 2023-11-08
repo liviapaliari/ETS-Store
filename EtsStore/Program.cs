@@ -17,7 +17,22 @@ static void GravarUsandoAdoNet()
     }
  }
 
+static void GravarUsandoEntity()
+{
+    Produto p = new Produto()
+    {
+        Nome = "Arduino Outro",
+        Categoria = "Componentes Eletrônicos",
+        Preco = 59.90
+    };
 
+    // INSTANCIANDO O BANCO
+    var context = new StoreContext();
 
+    // ESPECIFICANDO QUE É A TABELA PRODUTOS QUE VAI RECEBER O REGISTRO
+    context.Produtos.Add(p);
+    context.SaveChanges();
+}
 
-GravarUsandoAdoNet();
+//GravarUsandoAdoNet();
+GravarUsandoEntity();

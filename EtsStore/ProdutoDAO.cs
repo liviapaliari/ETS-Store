@@ -6,9 +6,11 @@ namespace EtsStore
     {
         private SqlConnection conexao;
 
+        // ABRE A CONEXÃO COM BANCO
         public ProdutoDAO()
         {
-            this.conexao = new SqlConnection("Server=(localdb)\\mssqllocaldb;Database=LojaDB;Trusted_Connection=true;");
+            // COMO ESTAMOS TRABALHANDO COM SQL SERVER (MICROSOFT), O USUÁRIO E SENHA JÁ É AUTENTICADO AUTOMATICAMENTE PELO WINDOWS
+            this.conexao = new SqlConnection("Server=JVL-C-0008M\\SQLEXPRESS;Database=EtsStoreDB;Trusted_Connection=true;TrustServerCertificate=True");
             this.conexao.Open();
         }
 
@@ -17,6 +19,7 @@ namespace EtsStore
             this.conexao.Close();
         }
 
+        // QUERY PARA ADICIONAR PRODUTO NO BANCO
         internal void Adicionar(Produto p)
         {
             try

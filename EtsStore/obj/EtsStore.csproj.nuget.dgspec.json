@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\oll2ca\\source\\repos\\EtsStore\\EtsStore\\EtsStore.csproj": {}
+    "C:\\Users\\pao7ca\\Desktop\\EtsStore\\EtsStore\\EtsStore.csproj": {}
   },
   "projects": {
-    "C:\\Users\\oll2ca\\source\\repos\\EtsStore\\EtsStore\\EtsStore.csproj": {
+    "C:\\Users\\pao7ca\\Desktop\\EtsStore\\EtsStore\\EtsStore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\oll2ca\\source\\repos\\EtsStore\\EtsStore\\EtsStore.csproj",
+        "projectUniqueName": "C:\\Users\\pao7ca\\Desktop\\EtsStore\\EtsStore\\EtsStore.csproj",
         "projectName": "EtsStore",
-        "projectPath": "C:\\Users\\oll2ca\\source\\repos\\EtsStore\\EtsStore\\EtsStore.csproj",
-        "packagesPath": "C:\\Users\\oll2ca\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\oll2ca\\source\\repos\\EtsStore\\EtsStore\\obj\\",
+        "projectPath": "C:\\Users\\pao7ca\\Desktop\\EtsStore\\EtsStore\\EtsStore.csproj",
+        "packagesPath": "C:\\Users\\pao7ca\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\pao7ca\\Desktop\\EtsStore\\EtsStore\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\oll2ca\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pao7ca\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -43,6 +43,10 @@
             "Microsoft.Data.SqlClient": {
               "target": "Package",
               "version": "[5.1.2, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.13, )"
             }
           },
           "imports": [
@@ -61,7 +65,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.309\\RuntimeIdentifierGraph.json"
         }
       }
     }
