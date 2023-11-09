@@ -98,3 +98,29 @@ void ExibirEntries(IEnumerable<EntityEntry> entityEntries)
 
 //var context = new StoreContext();
 //ExibirEntries(context.ChangeTracker.Entries());
+
+
+// APÓS FAZER AS MIGRATIONS
+
+var produto = new Produto()
+{
+    Nome = "Arduino",
+    PrecoUnitario = 59.90,
+    Unidade = "Peças",
+    Categoria = "Componentes Eletrônicos"
+};
+
+var compra = new Compra()
+{
+    Quantidade = 6,
+    Produto = produto,
+    PrecoTotal = produto.PrecoUnitario * 6
+};
+
+// ABRE E FECHA AUTOMATICAMENTE (PODE SER CONEXÕES, ARQUIVOS) ETC...
+using (var context = new StoreContext())
+{
+    context.Compras.Add(compra);
+    context.SaveChanges();
+    ExibirEntries(context.ChangeTracker.Entries());
+}
