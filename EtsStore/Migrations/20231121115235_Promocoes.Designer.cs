@@ -4,6 +4,7 @@ using EtsStore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EtsStore.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    partial class StoreContextModelSnapshot : ModelSnapshot
+    [Migration("20231121115235_Promocoes")]
+    partial class Promocoes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,49 +47,6 @@ namespace EtsStore.Migrations
                     b.HasIndex("ProdutoId");
 
                     b.ToTable("Compras");
-                });
-
-            modelBuilder.Entity("EtsStore.Cliente", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Clientes");
-                });
-
-            modelBuilder.Entity("EtsStore.Endereco", b =>
-                {
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Bairro")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ca")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Cidade")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Logradouro")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ClienteId");
-
-                    b.ToTable("Enderecos", (string)null);
                 });
 
             modelBuilder.Entity("EtsStore.Produto", b =>
@@ -166,17 +126,6 @@ namespace EtsStore.Migrations
                     b.Navigation("Produto");
                 });
 
-            modelBuilder.Entity("EtsStore.Endereco", b =>
-                {
-                    b.HasOne("EtsStore.Cliente", "Cliente")
-                        .WithOne("Endereco")
-                        .HasForeignKey("EtsStore.Endereco", "ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cliente");
-                });
-
             modelBuilder.Entity("ProdutoPromocao", b =>
                 {
                     b.HasOne("EtsStore.Produto", null)
@@ -189,12 +138,6 @@ namespace EtsStore.Migrations
                         .WithMany()
                         .HasForeignKey("PromocoesId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("EtsStore.Cliente", b =>
-                {
-                    b.Navigation("Endereco")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

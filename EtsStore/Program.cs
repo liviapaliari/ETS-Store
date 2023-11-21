@@ -79,48 +79,55 @@ static void ExcluirUsandoEntity()
 //ExcluirUsandoEntity();
 
 
-
-// ESTADOS DE CONEXÃO
-
-// UNCHANGED: Não tem diferença entre o que está sendo exibido e o que está no banco
-// MODIFIED: Existe uma diferença entre o que está no banco e o que está sendo exibido
-// ADDED: Há um novo registro, mas não foi salvo no banco ainda
-// DELETED: Um registro foi excluído, mas não foi salvo a alteração no banco ainda
-// DETACHED: Um registro esteve no código.. E não alterou absolutamente nada no banco, portanto vou me "desligar" dela
-
 void ExibirEntries(IEnumerable<EntityEntry> entityEntries)
 {
-    foreach (var item in  entityEntries)
+    foreach (var item in entityEntries)
     {
         Console.WriteLine(item.Entity.ToString() + "/" + item);
     }
 }
 
-//var context = new StoreContext();
-//ExibirEntries(context.ChangeTracker.Entries());
-
-
-// APÓS FAZER AS MIGRATIONS
-
-var produto = new Produto()
+var cliente = new Cliente()
 {
-    Nome = "Arduino",
-    PrecoUnitario = 59.90,
-    Unidade = "Peças",
-    Categoria = "Componentes Eletrônicos"
-};
-
-var compra = new Compra()
-{
-    Quantidade = 6,
-    Produto = produto,
-    PrecoTotal = produto.PrecoUnitario * 6
+    Nome = "João",
+    Endereco = new Endereco()
+    {
+        Ca = "500",
+        Logradouro = "Avenida Robert Bosch",
+        Bairro = "Boa Vista",
+        Cidade = "Campinas"
+    }
 };
 
 // ABRE E FECHA AUTOMATICAMENTE (PODE SER CONEXÕES, ARQUIVOS) ETC...
 using (var context = new StoreContext())
 {
-    context.Compras.Add(compra);
-    context.SaveChanges();
+    var promocao = new Promocao()
+    {
+        Descricao = "Mega Promoção",
+        DataInicio = new DateTime(2024, 01, 01),
+        DataTermino = new DateTime(2024, 02, 01)
+    };
+
+    var produtos = context.Produtos.Where(p => p.Categoria == "Componentes Eletrônicos");
+
+    foreach (var produto in produtos)
+    {
+        promocao.AdicionarProduto(produto);
+    }
+
+    //context.Promocoes.Add(promocao);
     ExibirEntries(context.ChangeTracker.Entries());
+    //context.SaveChanges();
+}
+
+using (var context2 = new StoreContext())
+{
+    var promocao = context2.Promocoes.First();
+    Console.WriteLine("Produtos da Promoção: ");
+
+    foreach (var produto in promocao.Produtos)
+    {
+        Console.WriteLine(produto.Nome);
+    }
 }
