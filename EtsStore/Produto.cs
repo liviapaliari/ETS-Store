@@ -8,6 +8,7 @@ public class Produto
     public double PrecoUnitario { get; internal set; }
     public String Unidade { get; internal set; }
     public List<Promocao> Promocoes { get; internal set; }
+    public List<Compra> Compras { get; internal set; }
 
     public override string ToString()
     {

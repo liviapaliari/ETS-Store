@@ -1,4 +1,5 @@
 ﻿using EtsStore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 static void GravarUsandoAdoNet()
@@ -87,17 +88,6 @@ void ExibirEntries(IEnumerable<EntityEntry> entityEntries)
     }
 }
 
-var cliente = new Cliente()
-{
-    Nome = "João",
-    Endereco = new Endereco()
-    {
-        Ca = "500",
-        Logradouro = "Avenida Robert Bosch",
-        Bairro = "Boa Vista",
-        Cidade = "Campinas"
-    }
-};
 
 // ABRE E FECHA AUTOMATICAMENTE (PODE SER CONEXÕES, ARQUIVOS) ETC...
 using (var context = new StoreContext())
@@ -121,13 +111,41 @@ using (var context = new StoreContext())
     //context.SaveChanges();
 }
 
+// EXIBIR PRODUTOS QUE ESTÃO EM UMA PROMOÇÃO
 using (var context2 = new StoreContext())
 {
-    var promocao = context2.Promocoes.First();
-    Console.WriteLine("Produtos da Promoção: ");
+    // O INCLUDE É NECESSÁRIO, SEM ELE POR PADRÃO O C# NÃO TRAZ DADOS DE TABELAS RELACIONADAS
+    var promocao = context2.Promocoes.Include(p => p.Produtos).First();
+
+    //Console.WriteLine("Produtos da Promoção: ");
 
     foreach (var produto in promocao.Produtos)
     {
-        Console.WriteLine(produto.Nome);
+        //Console.WriteLine(produto.Nome);
+    }
+}
+
+// EXIBIR O ENDEREÇO DO CLIENTE
+using (var context3 = new StoreContext())
+{
+    var cliente = context3.Clientes.Include(c => c.Endereco).First();
+    //Console.WriteLine(cliente.Endereco.Logradouro);
+}
+
+// MOSTRAR TODAS COMPRAS QUE POSSUEM UM TAL PRODUTO
+using (var context4 = new StoreContext())
+{   
+    // ONDE PRODUTO NA TABELA COMPRAS TENHA ID 8
+    var produto = context4.Produtos.Include(p => p.Compras).Where(p => p.Id == 8).First();
+
+    // PEGA O PRODUTO QUE JÁ ESTÁ NO CONTEXT, BUSCA AS COMPRAS DESTE PRODUTO QUE SEJAM MAIORES QUE 300
+    context4.Entry(produto).Collection(p => p.Compras)
+        .Query().Where(c => c.PrecoTotal > 600).Load();
+
+    Console.WriteLine("Mostrando as compras do produto");
+    
+    foreach (var item in produto.Compras)
+    {
+        Console.WriteLine(item.PrecoTotal);
     }
 }
